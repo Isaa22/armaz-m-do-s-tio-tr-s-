@@ -1,1 +1,0 @@
-# armaz-m-do-s-tio-tr-s-
