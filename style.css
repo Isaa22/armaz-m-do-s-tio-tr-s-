@@ -272,3 +272,27 @@ input[type="tel"]:focus {
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   }
 }
+
+/* Estilo para campo Valor PIX */
+.label-valor-pix {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #555;
+  margin-top: 15px;
+}
+
+.input-valor-pix {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 20px;
+  border: 1.5px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.input-valor-pix:focus {
+  outline: none;
+  border-color: #25d366;
+}
