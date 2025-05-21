@@ -24,6 +24,8 @@ const itensCarrinho = document.getElementById('itensCarrinho');
 const totalElement = document.getElementById('total');
 const nomeClienteInput = document.getElementById('nomeCliente');
 const telefoneClienteInput = document.getElementById('telefoneCliente');
+const valorPixInput = document.getElementById('valorPix');
+const qrCodeContainer = document.getElementById('qrCodeContainer');
 
 // Renderiza produtos na página
 function renderizarProdutos() {
@@ -102,6 +104,12 @@ function atualizarCarrinho() {
   // Atualiza total
   const total = carrinho.reduce((acc, item) => acc + item.preco * item.quantidade, 0);
   totalElement.textContent = total.toFixed(2);
+
+  // Atualiza o campo valorPix automaticamente com total do carrinho
+  valorPixInput.value = total.toFixed(2);
+
+  // Atualiza QR code sempre que total mudar
+  gerarQRCodePIX(total);
 }
 
 // Função para alternar visibilidade do carrinho
@@ -164,20 +172,49 @@ function finalizarPedido() {
   atualizarCarrinho();
   nomeClienteInput.value = '';
   telefoneClienteInput.value = '';
+  valorPixInput.value = '';
+  qrCodeContainer.innerHTML = '';
 }
+
+// Função para gerar QR code PIX (simplificado)
+function gerarQRCodePIX(valor) {
+  const valorFormatado = Number(valor).toFixed(2);
+  if (isNaN(valor) || valor <= 0) {
+    qrCodeContainer.innerHTML = '<p>Insira um valor válido para gerar QR code PIX.</p>';
+    return;
+  }
+
+  // Exemplo simples de payload PIX para gerar QR
+  const chavePix = "14958480943"; // substitua pela sua chave PIX real
+  const descricao = encodeURIComponent("Compra - Armazém da Sra. Lourdes");
+  const valorPixStr = valorFormatado.replace('.', ',');
+
+  // Payload PIX simplificado (não oficial, só pra exemplo)
+  const pixPayload = `00020126580014BR.GOV.BCB.PIX0136${chavePix}0208Compra${descricao}520400005303986540${valorPixStr}5802BR5914Armazem da Sra.Lourdes6009Rio Branco62070503***6304`;
+
+  // Limpar QR code antigo
+  qrCodeContainer.innerHTML = '';
+
+  // Gerar QR code usando biblioteca qrcode
+  QRCode.toCanvas(document.createElement('canvas'), pixPayload, { width: 250 }, function (error, canvas) {
+    if (error) {
+      qrCodeContainer.innerHTML = '<p>Erro ao gerar QR code PIX.</p>';
+      console.error(error);
+      return;
+    }
+    qrCodeContainer.appendChild(canvas);
+  });
+}
+
+// Atualiza QR code ao alterar valor PIX manualmente
+valorPixInput.addEventListener('input', () => {
+  const valor = parseFloat(valorPixInput.value);
+  gerarQRCodePIX(valor);
+});
 
 // Inicialização
 function init() {
   renderizarProdutos();
   atualizarCarrinho();
 
-  // Esconder carrinho inicialmente
-  document.getElementById('carrinho').style.display = 'none';
-
-  // Botão do carrinho
-  const cartIcon = document.querySelector('.cart-icon');
-  cartIcon.addEventListener('click', toggleCarrinho);
-}
-
-// Inicia o app após carregar a página
-window.addEventListener('DOMContentLoaded', init);
+  // Esconder
