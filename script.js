@@ -24,12 +24,15 @@ const itensCarrinho = document.getElementById('itensCarrinho');
 const totalElement = document.getElementById('total');
 const nomeClienteInput = document.getElementById('nomeCliente');
 const telefoneClienteInput = document.getElementById('telefoneCliente');
-const valorPixInput = document.getElementById('valorPix');
-const qrCodeContainer = document.getElementById('qrCodeContainer');
+const carrinhoSection = document.getElementById('carrinho');
+const pixSection = document.getElementById('pixSection');
+const pixQRCodeContainer = document.getElementById('pixQRCode');
+const copiarPixBtn = document.getElementById('copiarPixBtn');
 
-// Renderiza produtos na página
+const chavePix = "00020126360014BR.GOV.BCB.PIX01145449999999952040000530398654045.005802BR5909Seu Negócio6009Cidade XYZ62070503***63041D3D"; // EXEMPLO (troque pela sua chave Pix real)
+
 function renderizarProdutos() {
-  produtosGrid.innerHTML = ''; // limpa a grid
+  produtosGrid.innerHTML = '';
 
   produtos.forEach((produto, index) => {
     const card = document.createElement('div');
@@ -45,7 +48,6 @@ function renderizarProdutos() {
     produtosGrid.appendChild(card);
   });
 
-  // Adiciona evento de clique em todos os botões "Adicionar"
   const botoes = produtosGrid.querySelectorAll('button');
   botoes.forEach(botao => {
     botao.addEventListener('click', () => {
@@ -55,9 +57,7 @@ function renderizarProdutos() {
   });
 }
 
-// Adiciona item ao carrinho
 function adicionarAoCarrinho(produto) {
-  // Verifica se o produto já está no carrinho
   const itemExistente = carrinho.find(item => item.nome === produto.nome);
 
   if (itemExistente) {
@@ -69,13 +69,11 @@ function adicionarAoCarrinho(produto) {
   atualizarCarrinho();
 }
 
-// Remove item do carrinho
 function removerDoCarrinho(nomeProduto) {
   carrinho = carrinho.filter(item => item.nome !== nomeProduto);
   atualizarCarrinho();
 }
 
-// Atualiza o carrinho na UI
 function atualizarCarrinho() {
   // Atualiza contador
   const totalItens = carrinho.reduce((acc, item) => acc + item.quantidade, 0);
@@ -85,6 +83,7 @@ function atualizarCarrinho() {
   itensCarrinho.innerHTML = '';
   if (carrinho.length === 0) {
     itensCarrinho.innerHTML = '<li>Carrinho vazio.</li>';
+    pixSection.style.display = 'none';
   } else {
     carrinho.forEach(item => {
       const li = document.createElement('li');
@@ -92,29 +91,21 @@ function atualizarCarrinho() {
         ${item.nome} (${item.quantidade}) - R$ ${(item.preco * item.quantidade).toFixed(2)}
         <button class="remover-btn" aria-label="Remover ${item.nome}">x</button>
       `;
-      // Botão remover
       li.querySelector('button').addEventListener('click', () => {
         removerDoCarrinho(item.nome);
       });
-
       itensCarrinho.appendChild(li);
     });
+    pixSection.style.display = 'block';
+    gerarPixQRCode();
   }
 
   // Atualiza total
   const total = carrinho.reduce((acc, item) => acc + item.preco * item.quantidade, 0);
   totalElement.textContent = total.toFixed(2);
-
-  // Atualiza o campo valorPix automaticamente com total do carrinho
-  valorPixInput.value = total.toFixed(2);
-
-  // Atualiza QR code sempre que total mudar
-  gerarQRCodePIX(total);
 }
 
-// Função para alternar visibilidade do carrinho
 function toggleCarrinho() {
-  const carrinhoSection = document.getElementById('carrinho');
   if (carrinhoSection.style.display === 'block') {
     carrinhoSection.style.display = 'none';
   } else {
@@ -122,7 +113,6 @@ function toggleCarrinho() {
   }
 }
 
-// Valida cadastro simples
 function validarCadastro() {
   const nome = nomeClienteInput.value.trim();
   const telefone = telefoneClienteInput.value.trim();
@@ -140,7 +130,6 @@ function validarCadastro() {
   return true;
 }
 
-// Finaliza pedido e abre WhatsApp com mensagem formatada
 function finalizarPedido() {
   if (!validarCadastro()) return;
 
@@ -161,60 +150,54 @@ function finalizarPedido() {
   const total = carrinho.reduce((acc, item) => acc + item.preco * item.quantidade, 0);
   mensagem += `Total: R$${total.toFixed(2)}\n\nMeu WhatsApp: ${telefone}`;
 
-  // URL encode da mensagem para usar no WhatsApp
   const urlWhats = `https://wa.me/5543998306254?text=${encodeURIComponent(mensagem)}`;
-
-  // Abre nova aba no WhatsApp com mensagem pronta
   window.open(urlWhats, '_blank');
 
-  // Limpa carrinho e inputs
   carrinho = [];
   atualizarCarrinho();
   nomeClienteInput.value = '';
   telefoneClienteInput.value = '';
-  valorPixInput.value = '';
-  qrCodeContainer.innerHTML = '';
 }
 
-// Função para gerar QR code PIX (simplificado)
-function gerarQRCodePIX(valor) {
-  const valorFormatado = Number(valor).toFixed(2);
-  if (isNaN(valor) || valor <= 0) {
-    qrCodeContainer.innerHTML = '<p>Insira um valor válido para gerar QR code PIX.</p>';
-    return;
-  }
+function gerarPixQRCode() {
+  // Gera QR code do PIX com valor atualizado
+  pixQRCodeContainer.innerHTML = ''; // limpa
 
-  // Exemplo simples de payload PIX para gerar QR
-  const chavePix = "14958480943"; // substitua pela sua chave PIX real
-  const descricao = encodeURIComponent("Compra - Armazém da Sra. Lourdes");
-  const valorPixStr = valorFormatado.replace('.', ',');
+  const total = carrinho.reduce((acc, item) => acc + item.preco * item.quantidade, 0);
 
-  // Payload PIX simplificado (não oficial, só pra exemplo)
-  const pixPayload = `00020126580014BR.GOV.BCB.PIX0136${chavePix}0208Compra${descricao}520400005303986540${valorPixStr}5802BR5914Armazem da Sra.Lourdes6009Rio Branco62070503***6304`;
+  // Montar payload PIX com valor dinâmico
+  // Aqui só um exemplo simples, em produção você pode usar libs que geram o padrão EMV completo
 
-  // Limpar QR code antigo
-  qrCodeContainer.innerHTML = '';
+  const payloadPix = `${chavePix.replace('***', total.toFixed(2).replace('.', ','))}`; // substitui valor no payload
 
-  // Gerar QR code usando biblioteca qrcode
-  QRCode.toCanvas(document.createElement('canvas'), pixPayload, { width: 250 }, function (error, canvas) {
-    if (error) {
-      qrCodeContainer.innerHTML = '<p>Erro ao gerar QR code PIX.</p>';
-      console.error(error);
-      return;
-    }
-    qrCodeContainer.appendChild(canvas);
+  new QRCode(pixQRCodeContainer, {
+    text: payloadPix,
+    width: 180,
+    height: 180,
+    colorDark: "#25d366",
+    colorLight: "#e6f9f4",
+    correctLevel: QRCode.CorrectLevel.H
   });
 }
 
-// Atualiza QR code ao alterar valor PIX manualmente
-valorPixInput.addEventListener('input', () => {
-  const valor = parseFloat(valorPixInput.value);
-  gerarQRCodePIX(valor);
-});
+function copiarPix() {
+  const total = carrinho.reduce((acc, item) => acc + item.preco * item.quantidade, 0);
+  const pixCode = chavePix.replace('***', total.toFixed(2).replace('.', ','));
+  navigator.clipboard.writeText(pixCode).then(() => {
+    alert('Código PIX copiado para a área de transferência!');
+  });
+}
 
-// Inicialização
 function init() {
   renderizarProdutos();
   atualizarCarrinho();
 
-  // Esconder
+  carrinhoSection.style.display = 'none';
+  pixSection.style.display = 'none';
+
+  document.querySelector('.cart-icon').addEventListener('click', toggleCarrinho);
+  document.getElementById('finalizarPedidoBtn').addEventListener('click', finalizarPedido);
+  copiarPixBtn.addEventListener('click', copiarPix);
+}
+
+window.addEventListener('DOMContentLoaded', init);
