@@ -51,6 +51,18 @@
       <h2>Seu Carrinho</h2>
       <ul id="itensCarrinho" class="carrinho-list"></ul>
       <p class="total">Total: R$ <span id="total">0.00</span></p>
+
+      <!-- Campo para valor do PIX -->
+      <label for="valorPix" class="label-valor-pix">Valor para pagamento (R$):</label>
+      <input
+        type="number"
+        id="valorPix"
+        placeholder="Ex: 25.50"
+        step="0.01"
+        min="0"
+        class="input-valor-pix"
+      />
+
       <button onclick="finalizarPedido()" class="btn-finalizar">Finalizar Pedido</button>
     </aside>
   </main>
