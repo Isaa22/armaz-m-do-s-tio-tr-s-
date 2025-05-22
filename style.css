@@ -1,368 +1,42 @@
-/* Reset básico */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 body {
-  font-family: 'Inter', sans-serif;
-  background: #fefefe;
-  color: #222;
-  line-height: 1.6;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.container {
-  max-width: 1080px;
-  margin: 0 auto;
-  padding: 20px;
-  width: 90%;
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f3f0e6;
+  color: #3e2f1c;
 }
 
 header {
-  background-color: #fff;
-  box-shadow: 0 1px 8px rgba(0,0,0,0.12);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.header-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 18px 0;
-  gap: 15px;
-  flex-wrap: wrap;
-}
-
-.logo {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #128c7e; /* verde WhatsApp */
-  cursor: default;
-}
-
-.nav-list {
-  list-style: none;
-  display: flex;
-  gap: 30px;
-  flex-wrap: wrap;
-  justify-content: center;
-  flex: 1 1 auto;
-}
-
-.nav-list a {
-  color: #555;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 1.1rem;
-  transition: color 0.3s ease;
-}
-
-.nav-list a:hover,
-.nav-list a:focus {
-  color: #25d366;
-}
-
-.cart-icon {
-  position: relative;
-  cursor: pointer;
-  font-size: 1.6rem;
-  color: #555;
-  user-select: none;
-  transition: color 0.3s ease;
-}
-
-.cart-icon:hover {
-  color: #25d366;
-}
-
-#cartCount {
-  position: absolute;
-  top: -8px;
-  right: -12px;
-  background: #25d366;
+  background-color: #6c8c4a;
   color: white;
-  font-size: 0.75rem;
-  font-weight: 700;
-  padding: 3px 7px;
-  border-radius: 50%;
-  user-select: none;
-}
-
-.section {
-  margin-top: 45px;
-}
-
-h2 {
-  font-weight: 700;
-  font-size: 2rem;
-  color: #128c7e;
-  margin-bottom: 24px;
+  padding: 2rem;
   text-align: center;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
 }
 
-label {
-  display: block;
-  margin-bottom: 10px;
-  font-weight: 600;
-  color: #444;
-  font-size: 1rem;
-}
-
-input[type="text"],
-input[type="tel"] {
-  width: 100%;
-  padding: 14px 18px;
-  margin-bottom: 25px;
-  border: 1.8px solid #ddd;
-  border-radius: 8px;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
-}
-
-input[type="text"]:focus,
-input[type="tel"]:focus {
-  outline: none;
-  border-color: #25d366;
-}
-
-.produtos-grid {
+.produtos {
   display: grid;
-  grid-template-columns: repeat(auto-fit,minmax(230px,1fr));
-  gap: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
 }
 
 .produto {
-  background: white;
-  padding: 20px;
-  border-radius: 14px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transition: box-shadow 0.3s ease;
-  cursor: default;
-}
-
-.produto:hover {
-  box-shadow: 0 6px 25px rgba(0,0,0,0.15);
+  background: #fffefc;
+  border: 2px solid #dac8a5;
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
 }
 
 .produto img {
   max-width: 100%;
-  border-radius: 14px;
-  margin-bottom: 18px;
-  height: 160px;
-  object-fit: cover;
-  user-select: none;
+  height: auto;
+  border-radius: 8px;
 }
 
-.produto h3 {
-  font-size: 1.3rem;
-  margin-bottom: 10px;
-  color: #128c7e;
+footer {
+  background-color: #4a3c28;
+  color: white;
   text-align: center;
-}
-
-.produto p {
-  font-size: 1.05rem;
-  margin-bottom: 20px;
-  color: #444;
-}
-
-.produto button {
-  background-color: #25d366;
-  border: none;
-  color: white;
-  padding: 13px 0;
-  font-weight: 700;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  width: 100%;
-  font-size: 1.1rem;
-  letter-spacing: 0.05em;
-}
-
-.produto button:hover {
-  background-color: #1ebe57;
-}
-
-.carrinho-fechado {
-  display: none;
-}
-
-#carrinho {
-  background: white;
-  padding: 25px 25px 40px 25px;
-  border-radius: 14px;
-  box-shadow: 0 6px 30px rgba(0,0,0,0.12);
-  margin-top: 50px;
-  max-width: 480px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.carrinho-list {
-  list-style: none;
-  margin-bottom: 25px;
-  max-height: 300px;
-  overflow-y: auto;
-}
-
-.carrinho-list li {
-  padding: 12px 0;
-  border-bottom: 1px solid #eee;
-  font-weight: 600;
-  color: #333;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 15px;
-}
-
-.carrinho-list li button.remover-btn {
-  background: transparent;
-  border: none;
-  color: #e74c3c;
-  font-weight: 700;
-  font-size: 1.3rem;
-  cursor: pointer;
-  padding: 0 5px;
-  user-select: none;
-  transition: color 0.3s ease;
-}
-
-.carrinho-list li button.remover-btn:hover {
-  color: #c0392b;
-}
-
-.total {
-  font-weight: 700;
-  font-size: 1.4rem;
-  text-align: right;
-  margin-bottom: 30px;
-  color: #128c7e;
-}
-
-.btn-finalizar {
-  background-color: #25d366;
-  border: none;
-  color: white;
-  padding: 15px;
-  border-radius: 50px;
-  font-weight: 800;
-  cursor: pointer;
-  width: 100%;
-  transition: background-color 0.3s ease;
-  font-size: 1.25rem;
-  letter-spacing: 0.05em;
-}
-
-.btn-finalizar:hover {
-  background-color: #1ebe57;
-}
-
-.whatsapp-button {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: #25d366;
-  color: white;
-  font-weight: 700;
-  padding: 14px 25px;
-  border-radius: 50px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
-  text-decoration: none;
-  font-family: 'Inter', sans-serif;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  z-index: 1000;
-  cursor: pointer;
-  user-select: none;
-  font-size: 1.1rem;
-}
-
-.whatsapp-button:hover {
-  background-color: #1ebe57;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-}
-
-.whatsapp-button i {
-  font-size: 22px;
-}
-
-/* PIX QR code section */
-#pixSection {
-  margin-top: 35px;
-  background: #e6f9f4;
-  border: 2px solid #25d366;
-  border-radius: 12px;
-  padding: 20px;
-  max-width: 480px;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-  user-select: none;
-  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
-}
-
-#pixSection h3 {
-  color: #128c7e;
-  margin-bottom: 18px;
-  font-weight: 700;
-  font-size: 1.5rem;
-}
-
-#pixQRCode {
-  margin: 0 auto 15px;
-  width: 180px;
-  height: 180px;
-}
-
-#copiarPixBtn {
-  background-color: #128c7e;
-  border: none;
-  color: white;
-  padding: 12px 25px;
-  border-radius: 50px;
-  cursor: pointer;
-  font-weight: 700;
-  font-size: 1rem;
-  transition: background-color 0.3s ease;
-}
-
-#copiarPixBtn:hover {
-  background-color: #0d6653;
-}
-
-/* Responsivo */
-@media (max-width: 768px) {
-  .header-container {
-    flex-direction: column;
-    gap: 15px;
-    justify-content: center;
-  }
-
-  .nav-list {
-    justify-content: center;
-    gap: 20px;
-  }
-
-  .produtos-grid {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  }
-
-  #carrinho, #pixSection {
-    max-width: 100%;
-  }
+  padding: 1rem;
 }
