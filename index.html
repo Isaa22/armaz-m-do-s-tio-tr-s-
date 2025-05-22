@@ -2,68 +2,41 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Armazém da Sra. Lourdes</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
-
   <header>
-    <div class="container header-container">
-      <div class="logo">Armazém da Sra. Lourdes</div>
-      <nav>
-        <ul class="nav-list">
-          <li><a href="#catalogo">Produtos</a></li>
-          <li><a href="#cadastro">Cadastro</a></li>
-          <li><a href="#carrinho">Carrinho</a></li>
-        </ul>
-      </nav>
-      <div class="cart-icon" onclick="toggleCarrinho()">
-        <i class="fas fa-shopping-cart"></i>
-        <span id="cartCount">0</span>
-      </div>
-    </div>
+    <h1>Armazém da Sra. Lourdes</h1>
+    <p>"Onde a roça encontra o sabor!"</p>
   </header>
 
-  <main class="container">
-    <section id="cadastro" class="section">
-      <h2>Cadastro</h2>
-      <form id="formCadastro">
-        <label for="nomeCliente">Nome</label>
-        <input type="text" id="nomeCliente" placeholder="Seu nome" required />
-        <label for="telefoneCliente">WhatsApp</label>
-        <input type="tel" id="telefoneCliente" placeholder="ex: 55499999999" required pattern="\d{11,}" title="Digite o número no formato 55499999999" />
-      </form>
+  <main>
+    <section class="produtos">
+      <article class="produto">
+        <img src="https://via.placeholder.com/150" alt="Feijão Tropeiro">
+        <h2>Feijão Tropeiro</h2>
+        <p>Pacote 1kg - R$ 12,00</p>
+      </article>
+      <article class="produto">
+        <img src="https://via.placeholder.com/150" alt="Rapadura de Cana">
+        <h2>Rapadura de Cana</h2>
+        <p>Unidade - R$ 8,00</p>
+      </article>
+      <article class="produto">
+        <img src="https://via.placeholder.com/150" alt="Farinha de Milho">
+        <h2>Farinha de Milho</h2>
+        <p>500g - R$ 6,50</p>
+      </article>
     </section>
-
-    <section id="catalogo" class="section">
-      <h2>Produtos</h2>
-      <div class="produtos-grid" id="produtosGrid">
-        <!-- Produtos serão inseridos via JS -->
-      </div>
-    </section>
-
-    <aside id="carrinho" class="carrinho-fechado section">
-      <h2>Seu Carrinho</h2>
-      <ul id="itensCarrinho" class="carrinho-list"></ul>
-      <p class="total">Total: R$ <span id="total">0.00</span></p>
-
-      <button id="finalizarPedidoBtn" class="btn-finalizar">Finalizar Pedido</button>
-
-      <section id="pixSection" style="display:none; margin-top: 20px;">
-        <h3>Pagamento PIX</h3>
-        <div id="pixQRCode"></div>
-        <button id="copiarPixBtn">Copiar código PIX</button>
-      </section>
-    </aside>
   </main>
 
-  <a href="https://wa.me/5543998306254" class="whatsapp-button" target="_blank" aria-label="Fale conosco no WhatsApp">
-    <i class="fab fa-whatsapp"></i> Fale conosco
-  </a>
+  <footer>
+    <p>Endereço: Rio Branco do Ivaí, Paraná</p>
+    <p>Contato: (43) 99830-6254</p>
+    <p>"Prosa boa, café quente e produto de qualidade!"</p>
+  </footer>
 
   <script src="script.js"></script>
 </body>
