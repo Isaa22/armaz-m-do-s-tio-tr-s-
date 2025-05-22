@@ -1,0 +1,82 @@
+body {
+  --branco: #White;
+  --branco: #White;
+  --branco: #White;
+  font-family: 'Barlow', sans-serif;
+
+}
+
+input[type=checkbox] {
+  border: 2px solid var(--branco-);
+  box-shadow: none;
+}
+
+input[type=checkbox]:checked,
+input[type="checkbox"]:focus {
+  background-color: var(--branco-);
+  border-color: var(--branco-);
+  box-shadow: none;
+  outline: none;
+}
+
+.banner-1 {
+  background-image: url(70178fe999d53fcf745e10e0069eaec5.jpg);
+}
+
+.banners {
+  width: 100%;
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.banners-titulo {
+  --bs-bg-opacity: .2;
+}
+
+.banner-2{
+  background-image: url(70178fe999d53fcf745e10e0069eaec5.jpg);
+}
+
+.banner-3{
+  background-image: url(70178fe999d53fcf745e10e0069eaec5.jpg);
+}
+
+.banners {
+  height: 100vh;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover; 
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.banners-titulo {
+    --bs-bg-opacity: .2;
+}
+
+.botao-padrao {
+  background-color: var(--branco-);
+  color: black;
+}
+
+.botao-padrao:hover {
+  background-color: var(--branco-);
+}
+
+.input-range::-webkit-slider-thumb, footer {
+  background-color: var(--branco-);
+}
+
+[data-bs-theme="dark"] {
+  color: white;
+  .nav-link, .card-body, .offcanvas, .accordion, .btn {
+    --bs-nav-link-color: white;
+    --bs-card-color: white;
+    --bs-offcanvas-color: white;
+    --bs-body-color: white;
+    --bs-body-color: white;
+  }
+}
