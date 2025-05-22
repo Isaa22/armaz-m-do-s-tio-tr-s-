@@ -1,24 +1,19 @@
-const CACHE_NAME = 'armazen-cache-v1';
-const urlsToCache = [
+const CACHE_NAME = 'armazem-v1';
+const FILES_TO_CACHE = [
   '/',
   '/index.html',
-  '/style.css',
-  '/script.js',
-  '/imagens/logo.png' // ajuste o caminho das imagens conforme sua estrutura
+  '/styles.css',
+  '/script.js'
 ];
 
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll(urlsToCache);
-    })
+    caches.open(CACHE_NAME).then(cache => cache.addAll(FILES_TO_CACHE))
   );
 });
 
 self.addEventListener('fetch', event => {
   event.respondWith(
-    caches.match(event.request).then(response => {
-      return response || fetch(event.request);
-    })
+    caches.match(event.request).then(response => response || fetch(event.request))
   );
 });
