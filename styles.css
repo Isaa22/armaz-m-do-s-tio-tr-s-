@@ -20,7 +20,7 @@ input[type="checkbox"]:focus {
 }
 
 .banner-1 {
-  background-image: url(laranja.jpeg);
+  background-image: url('laranja.jpeg');
 }
 
 .banners {
